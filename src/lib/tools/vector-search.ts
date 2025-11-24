@@ -62,7 +62,7 @@ export const vectorSearchTool = tool({
         data: query.trim(),
         topK: Math.min(Math.max(1, topK), 20),
         includeMetadata: includeMetadata,
-        includeData: true, // CRITICAL: This returns the actual text content from vectors!
+        includeData: true,
       });
 
       if (!results || results.length === 0) {
@@ -76,7 +76,6 @@ export const vectorSearchTool = tool({
       }
 
       const formattedResults = results.map((result, index) => {
-        // Extract content - data can be string or the actual content
         let content = "";
         if (typeof result.data === 'string') {
           content = result.data;
@@ -160,7 +159,6 @@ export const getDetailedVectorInfoTool = tool({
 
       const vectorIndex = getVectorIndex(organizationSlug);
       
-      // Fetch the target chunk and adjacent chunks
       const chunksToFetch: number[] = [];
       for (let i = chunkIndex - contextChunks; i <= chunkIndex + contextChunks; i++) {
         if (i >= 0) {
@@ -168,12 +166,11 @@ export const getDetailedVectorInfoTool = tool({
         }
       }
 
-      // Fetch all chunks in parallel for speed
       const fetchPromises = chunksToFetch.map(async (idx) => {
         const id = `${organizationSlug}:${fileName}:${idx}`;
         try {
           const result = await vectorIndex.fetch([id], {
-            includeData: true, // CRITICAL: This returns the actual text content!
+            includeData: true,
           });
           if (result && result.length > 0 && result[0]) {
             return {
@@ -199,7 +196,6 @@ export const getDetailedVectorInfoTool = tool({
         metadata: Record<string, unknown> | undefined;
       }>;
 
-      // Sort by chunkIndex and format
       fetchedChunks.sort((a, b) => a.chunkIndex - b.chunkIndex);
 
       const formattedChunks = fetchedChunks.map((chunk) => {

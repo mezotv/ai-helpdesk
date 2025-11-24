@@ -12,7 +12,6 @@ export default async function Dashboard() {
     redirect("/login");
   }
 
-  // Fetch user's organizations
   const members = await prisma.member.findMany({
     where: {
       userId: session.user.id,
@@ -28,7 +27,6 @@ export default async function Dashboard() {
   const organizations = members.map((member) => member.organization);
   const currentOrgId = session.session?.activeOrganizationId || organizations[0]?.id || null;
   
-  // Find current organization and redirect to slug-based route
   const currentOrg = organizations.find((org) => org.id === currentOrgId) || organizations[0];
   
   if (currentOrg) {

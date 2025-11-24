@@ -37,7 +37,6 @@ export function Settings({ organization, onUpdate }: SettingsProps) {
   const [newSender, setNewSender] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
-  // Use the reusable slug check hook
   const { data: slugCheckData, isLoading: isCheckingSlug } = useCheckSlug({
     slug,
     currentSlug: organization.slug,
@@ -53,7 +52,6 @@ export function Settings({ organization, onUpdate }: SettingsProps) {
 
     setIsSaving(true);
     try {
-      // Update organization via better-auth (includes custom fields)
       await authClient.organization.update({
         organizationId: organization.id,
         data: {
@@ -66,7 +64,6 @@ export function Settings({ organization, onUpdate }: SettingsProps) {
 
       toast.success("Settings saved successfully");
       
-      // If slug changed, redirect to new slug URL
       if (slug !== organization.slug) {
         router.push(`/${slug}/dashboard`);
       } else {
@@ -102,7 +99,6 @@ export function Settings({ organization, onUpdate }: SettingsProps) {
           </CardDescription>
         </CardHeader>
         <CardPanel className="space-y-6">
-          {/* Helpdesk Email Display */}
           <div className="space-y-2">
             <Label>Helpdesk Email</Label>
             <div className="flex items-center gap-2">
@@ -125,7 +121,6 @@ export function Settings({ organization, onUpdate }: SettingsProps) {
 
           <Separator />
 
-          {/* Organization Name */}
           <div className="space-y-2">
             <Label htmlFor="name">Organization Name</Label>
             <Input
@@ -136,7 +131,6 @@ export function Settings({ organization, onUpdate }: SettingsProps) {
             />
           </div>
 
-          {/* Slug */}
           <div className="space-y-2">
             <Label htmlFor="slug">Slug</Label>
             <div className="flex items-center gap-2">
@@ -167,7 +161,6 @@ export function Settings({ organization, onUpdate }: SettingsProps) {
             )}
           </div>
 
-          {/* Website */}
           <div className="space-y-2">
             <Label htmlFor="website">Website</Label>
             <Input
@@ -179,7 +172,6 @@ export function Settings({ organization, onUpdate }: SettingsProps) {
             />
           </div>
 
-          {/* Accepted Senders */}
           <div className="space-y-2">
             <Label>Accepted Senders</Label>
             <p className="text-sm text-muted-foreground">

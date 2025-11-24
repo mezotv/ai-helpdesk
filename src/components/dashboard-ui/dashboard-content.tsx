@@ -3,9 +3,8 @@
 import { useQueryState, parseAsString } from "nuqs";
 import { useRouter } from "next/navigation";
 import { Tabs, TabsList, TabsPanel, TabsTab } from "@/components/ui/tabs";
-import { Mail, Upload, Settings as SettingsIcon } from "lucide-react";
+import { Upload, Settings as SettingsIcon } from "lucide-react";
 import { DocumentUpload } from "./document-upload";
-import { EmailsTable } from "./emails-table";
 import { Settings } from "./settings";
 import { OrgSwitcher } from "@/components/org-switcher";
 import { UserNav } from "@/components/user-nav";
@@ -75,10 +74,6 @@ export function DashboardContent({
               <Upload className="mr-2 h-4 w-4" />
               Upload Documents
             </TabsTab>
-            <TabsTab value="emails">
-              <Mail className="mr-2 h-4 w-4" />
-              Sent Emails
-            </TabsTab>
             <TabsTab value="settings">
               <SettingsIcon className="mr-2 h-4 w-4" />
               Settings
@@ -86,9 +81,6 @@ export function DashboardContent({
           </TabsList>
           <TabsPanel value="documents" className="mt-4">
             <DocumentUpload slug={currentSlug || currentOrg?.slug || ""} />
-          </TabsPanel>
-          <TabsPanel value="emails" className="mt-4">
-            <EmailsTable />
           </TabsPanel>
           <TabsPanel value="settings" className="mt-4">
             {currentOrg && (

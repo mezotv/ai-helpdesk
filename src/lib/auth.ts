@@ -35,11 +35,8 @@ export const auth = betterAuth({
         user: {
             create: {
                 after: async (user) => {
-                    // Generate a unique slug for the personal organization
-                    // Using user ID ensures uniqueness
                     const orgSlug = `personal-${user.id.slice(0, 8)}`
                     
-                    // Create the personal organization
                     const organization = await prisma.organization.create({
                         data: {
                             id: crypto.randomUUID(),
@@ -49,7 +46,6 @@ export const auth = betterAuth({
                         },
                     })
 
-                    // Add the user as an owner member of their personal organization
                     await prisma.member.create({
                         data: {
                             id: crypto.randomUUID(),

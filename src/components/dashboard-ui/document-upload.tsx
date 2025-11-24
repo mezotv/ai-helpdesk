@@ -114,7 +114,6 @@ export function DocumentUpload({ slug }: DocumentUploadProps) {
         return;
       }
 
-      // Success
       const successMessage =
         data.upserted > 0
           ? `Successfully uploaded ${data.filesProcessed} file${data.filesProcessed !== 1 ? "s" : ""} (${data.upserted} chunks indexed)`
@@ -126,7 +125,6 @@ export function DocumentUpload({ slug }: DocumentUploadProps) {
         toast.success(successMessage);
       }
 
-      // Clear files after successful upload
       files.forEach((file) => {
         if (file.preview) {
           URL.revokeObjectURL(file.preview);
@@ -222,7 +220,6 @@ export function DocumentUpload({ slug }: DocumentUploadProps) {
                     className="flex items-center gap-3 rounded-lg border p-3"
                   >
                     {file.preview ? (
-                      // biome-ignore lint: blob URLs cannot be optimized by Next.js Image
                       <img
                         src={file.preview}
                         alt={file.name}

@@ -209,7 +209,6 @@ REMEMBER:
 - CRITICAL: Do NOT wrap your response in markdown code blocks (do NOT use triple backticks). Return ONLY the raw HTML content.`,
     });
 
-    // Strip markdown code blocks if present (e.g., ```html ... ```)
     const cleanedHtml = stripMarkdownCodeBlocks(text);
 
     await aiInbx.emails.reply(email.id, {

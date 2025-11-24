@@ -18,7 +18,6 @@ export default async function SlugDashboard({
     redirect("/login");
   }
 
-  // Fetch user's organizations
   const members = await prisma.member.findMany({
     where: {
       userId: session.user.id,
@@ -33,7 +32,6 @@ export default async function SlugDashboard({
 
   const organizations = members.map((member) => member.organization);
   
-  // Find organization by slug (user is already filtered by membership)
   const currentOrg = organizations.find((org) => org.slug === slug);
   
   if (!currentOrg) {

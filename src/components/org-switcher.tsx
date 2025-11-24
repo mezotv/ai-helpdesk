@@ -45,7 +45,6 @@ export function OrgSwitcher({ organizations, currentOrgId }: OrgSwitcherProps) {
   const [workspaceSlug, setWorkspaceSlug] = useState("");
   const [isCreating, setIsCreating] = useState(false);
 
-  // Use the reusable slug check hook
   const { data: slugCheckData, isLoading: isCheckingSlug } = useCheckSlug({
     slug: workspaceSlug,
     enabled: isCreateModalOpen,
@@ -53,7 +52,6 @@ export function OrgSwitcher({ organizations, currentOrgId }: OrgSwitcherProps) {
 
   const slugAvailable = slugCheckData?.isAvailable;
 
-  // Derive selected org from props - no useEffect needed!
   const selectedOrg = useMemo(() => {
     if (currentOrgId) {
       const org = organizations.find((o) => o.id === currentOrgId);
@@ -65,7 +63,6 @@ export function OrgSwitcher({ organizations, currentOrgId }: OrgSwitcherProps) {
   const handleOrgChange = async (orgId: string) => {
     const org = organizations.find((o) => o.id === orgId);
     if (org) {
-      // Navigate to slug-based dashboard
       router.push(`/${org.slug}/dashboard`);
     }
   };
@@ -107,7 +104,6 @@ export function OrgSwitcher({ organizations, currentOrgId }: OrgSwitcherProps) {
       setWorkspaceName("");
       setWorkspaceSlug("");
       setIsCreateModalOpen(false);
-      // Navigate to the new workspace dashboard
       router.push(`/${createdSlug}/dashboard`);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to create workspace");

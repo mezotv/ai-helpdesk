@@ -121,7 +121,6 @@ export function FileDropzone({
           </div>
           <Button
             onClick={() => {
-              // Handle upload
               console.log("Uploading files:", files)
             }}
             className="w-full"
