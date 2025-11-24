@@ -1,6 +1,6 @@
 "use client"
 
-import { SignOut, Gear, User } from "@phosphor-icons/react"
+import { LogOut, Settings, User } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
@@ -58,12 +58,12 @@ export function UserNav({ user }: UserNavProps) {
             <span>Profile</span>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Gear className="mr-2 h-4 w-4" />
+            <Settings className="mr-2 h-4 w-4" />
             <span>Settings</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleLogout}>
-            <SignOut className="mr-2 h-4 w-4" />
+            <LogOut className="mr-2 h-4 w-4" />
             <span>Log out</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

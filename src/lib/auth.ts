@@ -5,7 +5,25 @@ import prisma from "./prisma"
 
 export const auth = betterAuth({
     plugins: [ 
-        organization() 
+        organization({
+            schema: {
+                organization: {
+                    additionalFields: {
+                        website: {
+                            type: "string",
+                            required: false,
+                            input: true,
+                        },
+                        acceptedSenders: {
+                            type: "string[]",
+                            required: false,
+                            defaultValue: [],
+                            input: true,
+                        },
+                    },
+                },
+            },
+        }) 
     ],
     experimental: {
         joins: true,

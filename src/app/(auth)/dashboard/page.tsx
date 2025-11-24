@@ -2,7 +2,6 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
-import { DashboardContent } from "@/components/dashboard-ui/dashboard-content";
 
 export default async function Dashboard() {
   const session = await auth.api.getSession({
@@ -28,12 +27,13 @@ export default async function Dashboard() {
 
   const organizations = members.map((member) => member.organization);
   const currentOrgId = session.session?.activeOrganizationId || organizations[0]?.id || null;
-
-  return (
-    <DashboardContent
-      user={session.user}
-      organizations={organizations}
-      currentOrgId={currentOrgId}
-    />
-  );
+  
+  // Find current organization and redirect to slug-based route
+  const currentOrg = organizations.find((org) => org.id === currentOrgId) || organizations[0];
+  
+  if (currentOrg) {
+    redirect(`/${currentOrg.slug}/dashboard`);
+  } else {
+    redirect("/login");
+  }
 }

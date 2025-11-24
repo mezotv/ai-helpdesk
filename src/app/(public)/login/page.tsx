@@ -23,7 +23,7 @@ export default function Login() {
     try {
       await authClient.signIn.social({
         provider,
-        callbackURL: "/dashboard",
+        callbackURL: "/dashboard", // Will redirect to slug-based route
       });
     } catch (_error) {
       toastManager.add({

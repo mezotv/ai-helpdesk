@@ -1,10 +1,12 @@
 "use client";
 
 import { useQueryState, parseAsString } from "nuqs";
+import { useRouter } from "next/navigation";
 import { Tabs, TabsList, TabsPanel, TabsTab } from "@/components/ui/tabs";
-import { Envelope, Upload } from "@phosphor-icons/react";
+import { Mail, Upload, Settings as SettingsIcon } from "lucide-react";
 import { DocumentUpload } from "./document-upload";
 import { EmailsTable } from "./emails-table";
+import { Settings } from "./settings";
 import { OrgSwitcher } from "@/components/org-switcher";
 import { UserNav } from "@/components/user-nav";
 
@@ -23,23 +25,34 @@ type Organization = {
   name: string;
   slug: string;
   logo?: string | null;
+  website?: string | null;
+  acceptedSenders?: string[];
 };
 
 interface DashboardContentProps {
   user: User;
   organizations: Organization[];
   currentOrgId?: string | null;
+  currentSlug?: string;
 }
 
 export function DashboardContent({
   user,
   organizations,
   currentOrgId,
+  currentSlug,
 }: DashboardContentProps) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useQueryState(
     "tab",
     parseAsString.withDefault("documents")
   );
+
+  const currentOrg = organizations.find((org) => org.id === currentOrgId) || organizations[0];
+
+  const handleUpdate = () => {
+    router.refresh();
+  };
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -63,15 +76,24 @@ export function DashboardContent({
               Upload Documents
             </TabsTab>
             <TabsTab value="emails">
-              <Envelope className="mr-2 h-4 w-4" />
+              <Mail className="mr-2 h-4 w-4" />
               Sent Emails
+            </TabsTab>
+            <TabsTab value="settings">
+              <SettingsIcon className="mr-2 h-4 w-4" />
+              Settings
             </TabsTab>
           </TabsList>
           <TabsPanel value="documents" className="mt-4">
-            <DocumentUpload />
+            <DocumentUpload slug={currentSlug || currentOrg?.slug || ""} />
           </TabsPanel>
           <TabsPanel value="emails" className="mt-4">
             <EmailsTable />
+          </TabsPanel>
+          <TabsPanel value="settings" className="mt-4">
+            {currentOrg && (
+              <Settings organization={currentOrg} onUpdate={handleUpdate} />
+            )}
           </TabsPanel>
         </Tabs>
       </main>

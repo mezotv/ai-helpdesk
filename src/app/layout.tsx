@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/components/ui/toast";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { QueryProvider } from "@/components/providers/query-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,11 +33,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NuqsAdapter>
-          <ToastProvider>
-            {children}
-          </ToastProvider>
-        </NuqsAdapter>
+        <QueryProvider>
+          <NuqsAdapter>
+            <ToastProvider>
+              {children}
+            </ToastProvider>
+          </NuqsAdapter>
+        </QueryProvider>
       </body>
     </html>
   );
