@@ -53,6 +53,10 @@ export function DashboardContent({
     router.refresh();
   };
 
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+  };
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="flex h-16 shrink-0 items-center gap-4 border-b px-4 md:px-6">
@@ -66,7 +70,7 @@ export function DashboardContent({
       <main className="flex flex-1 flex-col gap-4 p-4 md:p-6">
         <Tabs
           value={activeTab}
-          onValueChange={setActiveTab}
+          onValueChange={handleTabChange}
           className="w-full"
         >
           <TabsList>
